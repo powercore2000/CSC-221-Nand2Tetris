@@ -45,19 +45,16 @@ CHIP ALU {
    // Put you code here:
 
    //nx zx
-    Not16(in[0]=zx, out=invertZeroXinput);
-    And16(a=x, b=invertZeroXinput, out=Xzx);
 
-    Not16(in=Xzx, out=invertXzx);
-    Mux16(a=Xzx, b=invertXzx, sel=nx, out=Xnx);
+   Mux16(a=x, b=false, sel=zx, out=zerox);
+   Not16(in=zerox, out=notx);
+   Mux16(a=zerox, b=notx, sel=nx, out=Xnx);
 
     //ny zy
-    Not16(in[0]=zy, out=invertZeroYinput);
-    And16(a=y, b=invertZeroYinput, out=Yzy);
-
-    Not16(in=Yzy, out=invertYzy);
-    Mux16(a=Yzy, b=invertYzy, sel=ny, out=Yny);
-
+   Mux16(a=y, b=false, sel=zy, out=zeroy);
+   Not16(in=zeroy, out=noty);
+   Mux16(a=zeroy, b=noty, sel=ny, out=Yny);
+   
     //f
     And16(a=Xnx, b=Yny, out=muxA);
     Add16(a=Xnx, b=Yny, out=muxB);
